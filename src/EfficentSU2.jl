@@ -1,6 +1,6 @@
 module EfficentSU2
     using StaticArrays
-    # import Base.*, LinearAlgebra.norm
+    import Base.*, LinearAlgebra.norm
     mutable struct SU2{T} <: FieldVector{2,T}
         z₁::T
         z₂::T
@@ -31,5 +31,6 @@ function getMatrix(a::SU2)
     #     return
     
     # end
-    export SU2,getMatrix
+ *(a::SU2,b::SU2)= SU2(a[1]*b[1]-a[2]*conj(b[2]), a[1]*b[2]+a[2]*conj(b[1]))
+    export SU2,getMatrix,*
 end
