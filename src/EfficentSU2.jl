@@ -31,6 +31,13 @@ function getMatrix(a::SU2)
     #     return
     
     # end
- *(a::SU2,b::SU2)= SU2(a[1]*b[1]-a[2]*conj(b[2]), a[1]*b[2]+a[2]*conj(b[1]))
+ """
+    *(a::SU2,b::SU2)
+#TODO Add DFocstring
+TBW
+"""
+*(a::SU2,b::SU2)= SU2(a[1]*b[1]-a[2]*conj(b[2]), a[1]*b[2]+a[2]*conj(b[1]))
+
+ #TODO Inplace Multiplication
     export SU2,getMatrix,*
 end
