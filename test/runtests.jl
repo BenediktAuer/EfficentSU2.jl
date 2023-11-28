@@ -1,6 +1,6 @@
 using EfficentSU2
-using Test
+using Test, StaticArrays
 
 @testset "EfficentSU2.jl" begin
-    # Write your tests here.
+    @test typeof(SU2(1*im,2*im).m) == MVector{2,Complex{Int64}}
 end
