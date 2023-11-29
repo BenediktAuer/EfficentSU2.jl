@@ -38,12 +38,13 @@ TBW
 """
 *(a::SU2,b::SU2)= SU2(a[1]*b[1]-a[2]*conj(b[2]), a[1]*b[2]+a[2]*conj(b[1]))
 tr(a::SU2) = a[1]+conj(a[1])
-#TODO add similar function
+
+similar(a::SU2) = SU2(MArray{Tuple{2}}( Array{eltype(a)}(undef,2)))
 function mul!(res::SU2,a::SU2,b::SU2)
     res[1] = a[1]*b[1]-a[2]*conj(b[2])
     res[2] = a[1]*b[2]+a[2]*conj(b[1])
     return
 end
-    export SU2,getMatrix,*,tr,mul!
+    export SU2,getMatrix,*,tr,mul!,similar
 end
 
