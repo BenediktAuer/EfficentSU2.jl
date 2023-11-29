@@ -9,3 +9,5 @@ using Test, StaticArrays
 end
 #TODO Add test for getMatrix()
 #TODO Add test for Base.*
+#TODO Add test for mul!
+#TODO Add test for similar
