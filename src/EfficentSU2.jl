@@ -1,6 +1,6 @@
 module EfficentSU2
     using StaticArrays
-    import Base.*,Base.similar, LinearAlgebra.norm,LinearAlgebra.tr, LinearAlgebra.mul!
+    import Base.*,Base.similar, LinearAlgebra.norm,LinearAlgebra.tr, LinearAlgebra.mul!, Base.ones
     mutable struct SU2{T} <: FieldVector{2,T}
         z₁::T
         z₂::T
@@ -40,11 +40,19 @@ TBW
 tr(a::SU2) = a[1]+conj(a[1])
 
 similar(a::SU2) = SU2(MArray{Tuple{2}}( Array{eltype(a)}(undef,2)))
+"""
+    mul!(res::SU2,a::SU2,b::SU2)
+    Calculate a*b and store it in res
+"""
 function mul!(res::SU2,a::SU2,b::SU2)
     res[1] = a[1]*b[1]-a[2]*conj(b[2])
     res[2] = a[1]*b[2]+a[2]*conj(b[1])
     return
 end
+function ones(::Type{T}, dims::Tuple{Vararg{I, N}} where I<:Integer) where {T<:SU2,N}
+    return reshape([ones(T) for i in 1:prod(dims)],dims)
+end
+
     export SU2,getMatrix,*,tr,mul!,similar
 end
 
