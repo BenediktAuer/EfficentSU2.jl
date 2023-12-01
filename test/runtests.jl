@@ -26,3 +26,4 @@ end
     @test getMatrix(c) == @MMatrix([[-4+2im  4.0im];[4im -4-2im]])
 end
 
+#TODO add Test for ones check for deepcopys by modifing one entry and chekc if its the only one who has changed
