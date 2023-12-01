@@ -52,7 +52,7 @@ end
 function ones(::Type{T}, dims::Tuple{Vararg{I, N}} where I<:Integer) where {T<:SU2,N}
     return reshape([ones(T) for i in 1:prod(dims)],dims)
 end
-
-    export SU2,getMatrix,*,tr,mul!,similar
+#TODO add adjoint method
+    export SU2,getMatrix,*,tr,mul!,similar,ones
 end
 
