@@ -25,5 +25,9 @@ end
     mul!(c,a,b)
     @test getMatrix(c) == @MMatrix([[-4+2im  4.0im];[4im -4-2im]])
 end
-
+@testset "Renorm and Adjoint" begin
+    a = SU2(1+1f0*im,2f0*im)
+    renormalize!(a)
+    @test getMatrix(a*a')≈I #a' is the adjoint
+end
 #TODO add Test for ones check for deepcopys by modifing one entry and chekc if its the only one who has changed
