@@ -1,6 +1,6 @@
 module EfficentSU2
     using StaticArrays
-    import Base: *, similar, ones, adjoint
+    import Base: *, similar, ones, adjoint,convert
     using LinearAlgebra
     import LinearAlgebra: tr, mul!,  adjoint!
 
@@ -80,6 +80,11 @@ function adjoint!(res::SU2{T},a::SU2{T}) where T<:Number
         res[2] = -a[2]
         return
     end
-    export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint,adjoint!
+    #TODO:Fix promotion rules
+    convert(::Type{<:SU2{T}},a::SU2) where T = SU2(convert(T,a.z₁),convert(T,a.z₂))
+    function promote_rule(::Type{SU2{T}},::Type{SU2{S}}) where {T<:Number,S<:Number}
+        SU2{promote_type(T,S)}
+        end
+    export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint,adjoint!, promote_rule
 end
 
