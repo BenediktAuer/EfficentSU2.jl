@@ -80,11 +80,8 @@ function adjoint!(res::SU2{T},a::SU2{T}) where T<:Number
         res[2] = -a[2]
         return
     end
-    #TODO:Fix promotion rules
-    convert(::Type{<:SU2{T}},a::SU2) where T = SU2(convert(T,a.z₁),convert(T,a.z₂))
-    function promote_rule(::Type{SU2{T}},::Type{SU2{S}}) where {T<:Number,S<:Number}
-        SU2{promote_type(T,S)}
-        end
+    Base.promote_type(::Type{SU2{T}},::Type{SU2{S}}) where {T,S} = SU2{promote_type(T,S)}
+
     export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint,adjoint!, promote_rule
 end
 
