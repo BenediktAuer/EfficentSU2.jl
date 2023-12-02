@@ -59,6 +59,6 @@ function renormalize!(a::SU2)
 end
 adjoint(a::SU2) = SU2(conj(a[1]),-a[2])
 
-    export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!
+    export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint
 end
 
