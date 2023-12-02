@@ -1,7 +1,7 @@
 module EfficentSU2
     using StaticArrays
     using LinearAlgebra
-    import Base.*,Base.similar,LinearAlgebra.tr, LinearAlgebra.mul!, Base.ones, Base.adjoint
+    import Base.*,Base.similar,LinearAlgebra.tr, LinearAlgebra.mul!, Base.ones, Base.adjoint, LinearAlgebra.adjoint!
     mutable struct SU2{T} <: FieldVector{2,T}
         z₁::T
         z₂::T
@@ -73,7 +73,11 @@ function renormalize!(a::SU2)
     return
 end
 adjoint(a::SU2) = SU2(conj(a[1]),-a[2])
-
-    export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint
+function adjoint!(res::SU2{T},a::SU2{T}) where T<:Number
+        res[1] = conj(a[1])
+        res[2] = -a[2]
+        return
+    end
+    export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint,adjoint!
 end
 
