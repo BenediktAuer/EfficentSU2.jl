@@ -1,7 +1,9 @@
 module EfficentSU2
     using StaticArrays
+    import Base: *, similar, ones, adjoint
     using LinearAlgebra
-    import Base.*,Base.similar,LinearAlgebra.tr, LinearAlgebra.mul!, Base.ones, Base.adjoint, LinearAlgebra.adjoint!
+    import LinearAlgebra: tr, mul!,  adjoint!
+
     mutable struct SU2{T} <: FieldVector{2,T}
         z₁::T
         z₂::T
