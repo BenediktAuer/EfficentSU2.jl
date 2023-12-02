@@ -75,10 +75,14 @@ function renormalize!(a::SU2)
     return
 end
 adjoint(a::SU2) = SU2(conj(a[1]),-a[2])
+#TODO not working as expected
+adjoint!(res::SU2{T},a::SU2{S}) where {T,S} = begin 
+    res =adjoint!(promote(res,a)...)
+end
 function adjoint!(res::SU2{T},a::SU2{T}) where T<:Number
         res[1] = conj(a[1])
         res[2] = -a[2]
-        return
+        return res
     end
     Base.promote_type(::Type{SU2{T}},::Type{SU2{S}}) where {T,S} = SU2{promote_type(T,S)}
 
