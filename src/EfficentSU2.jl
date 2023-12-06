@@ -36,7 +36,7 @@ function getMatrix(a::SU2)
     # end
 
 *(a::SU2,b::SU2)= SU2(a[1]*b[1]-a[2]*conj(b[2]), a[1]*b[2]+a[2]*conj(b[1]))
-tr(a::SU2) = a[1]+conj(a[1])
+tr(a::SU2) = 2*real(a[1])
 
 similar(a::SU2) = SU2(MArray{Tuple{2}}( Array{eltype(a)}(undef,2)))
 """
@@ -76,9 +76,9 @@ function renormalize!(a::SU2)
 end
 adjoint(a::SU2) = SU2(conj(a[1]),-a[2])
 #TODO not working as expected
-adjoint!(res::SU2{T},a::SU2{S}) where {T,S} = begin 
-    res =adjoint!(promote(res,a)...)
-end
+# adjoint!(res::SU2{T},a::SU2{S}) where {T,S} = begin 
+#     res =adjoint!(promote(res,a)...)
+# end
 function adjoint!(res::SU2{T},a::SU2{T}) where T<:Number
         res[1] = conj(a[1])
         res[2] = -a[2]
