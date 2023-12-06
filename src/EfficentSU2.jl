@@ -35,15 +35,15 @@ function getMatrix(a::SU2)
     
     # end
 
-*(a::SU2,b::SU2)= SU2(a[1]*b[1]-a[2]*conj(b[2]), a[1]*b[2]+a[2]*conj(b[1]))
-tr(a::SU2) = 2*real(a[1])
+*(a::SU2{T},b::SU2{T}) where T= SU2(a[1]*b[1]-a[2]*conj(b[2]), a[1]*b[2]+a[2]*conj(b[1]))
+tr(a::SU2{T}) where T = 2*real(a[1])
 
-similar(a::SU2) = SU2(MArray{Tuple{2}}( Array{eltype(a)}(undef,2)))
+similar(a::SU2{T}) where T = SU2(MArray{Tuple{2}}( Array{eltype(a)}(undef,2)))
 """
-    mul!(res::SU2,a::SU2,b::SU2)
+    mul!(res::SU2{T},a::SU2{T},b::SU2{T})
     Calculate a*b and store it in res
 """
-function mul!(res::SU2,a::SU2,b::SU2)
+function mul!(res::SU2{T},a::SU2{T},b::SU2{T}) where T
     res[1] = a[1]*b[1]-a[2]*conj(b[2])
     res[2] = a[1]*b[2]+a[2]*conj(b[1])
     return
@@ -52,7 +52,7 @@ function ones(::Type{T}, dims::Tuple{Vararg{I, N}} where I<:Integer) where {T<:S
     return reshape([ones(T) for i in 1:prod(dims)],dims)
 end
 """
-    renormalize!(a::SU2)
+    renormalize!(a::SU2{T})
 Normalizes the Matrix `a`such that  ``\\abs{z_1}^1+\\abs{z_2} =1``
 
 ```julia-repl
@@ -70,11 +70,11 @@ julia> a = SU2(2+3f0im,1+4f0im)
 
 ```
 """
-function renormalize!(a::SU2) 
+function renormalize!(a::SU2{T}) where T
      a./= norm(a)
     return
 end
-adjoint(a::SU2) = SU2(conj(a[1]),-a[2])
+adjoint(a::SU2{T}) where T = SU2(conj(a[1]),-a[2])
 #TODO not working as expected
 # adjoint!(res::SU2{T},a::SU2{S}) where {T,S} = begin 
 #     res =adjoint!(promote(res,a)...)
