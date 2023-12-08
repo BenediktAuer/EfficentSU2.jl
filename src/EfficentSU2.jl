@@ -48,6 +48,10 @@ function mul!(res::SU2{T},a::SU2{T},b::SU2{T}) where T
     res[2] = a[1]*b[2]+a[2]*conj(b[1])
     return
 end
+function ones(::Type{T})  where {N<:Number, T<:SU2{N}}
+    SU2(one(N),zero(N))
+    
+end
 function ones(::Type{T}, dims::Tuple{Vararg{I, N}} where I<:Integer) where {T<:SU2,N}
     return reshape([ones(T) for i in 1:prod(dims)],dims)
 end
