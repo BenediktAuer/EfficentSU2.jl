@@ -89,6 +89,7 @@ function adjoint!(res::SU2{T},a::SU2{T}) where T<:Number
         return res
     end
     Base.promote_type(::Type{SU2{T}},::Type{SU2{S}}) where {T,S} = SU2{promote_type(T,S)}
+    Base.convert(::Type{SU2{T}},a::SU2{N}) where{ T<:Any,N<:Number} = SU2(T(a[1]),T(a[2]))
 
     export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint,adjoint!, promote_rule
 end
