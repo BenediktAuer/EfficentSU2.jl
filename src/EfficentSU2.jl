@@ -56,6 +56,14 @@ function ones(::Type{T})  where {N<:Number, T<:SU2{N}}
     SU2(one(N),zero(N))
     
 end
+function add!(res,a,b)
+    res[1] = a[1]+b[1]
+    res[2] = a[2]+b[2]
+end
+function sub!(res,a,b)
+    res[1] = a[1]-b[1]
+    res[2] = a[2]-b[2]
+end
 function ones(::Type{T}, dims::Tuple{Vararg{I, N}} where I<:Integer) where {T<:SU2,N}
     return reshape([ones(T) for i in 1:prod(dims)],dims)
 end
@@ -95,6 +103,6 @@ function adjoint!(res::SU2{T},a::SU2{T}) where T<:Number
     Base.promote_type(::Type{SU2{T}},::Type{SU2{S}}) where {T,S} = SU2{promote_type(T,S)}
     Base.convert(::Type{SU2{T}},a::SU2{N}) where{ T<:Any,N<:Number} = SU2(T(a[1]),T(a[2]))
 
-    export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint,adjoint!, promote_rule
+    export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint,adjoint!, promote_rule,add!,sub!
 end
 
