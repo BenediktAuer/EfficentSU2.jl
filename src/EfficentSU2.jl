@@ -48,6 +48,10 @@ function mul!(res::SU2{T},a::SU2{T},b::SU2{T}) where T
     res[2] = a[1]*b[2]+a[2]*conj(b[1])
     return
 end
+function mul!(res::SU2{T},res2::SU2{T},a::SU2{T},b::SU2{T},c::SU2{T}) where T
+    @inline mul!(res2,a,b)
+    @inline mul!(res,res2,c)
+end
 function ones(::Type{T})  where {N<:Number, T<:SU2{N}}
     SU2(one(N),zero(N))
     
