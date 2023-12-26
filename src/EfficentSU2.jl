@@ -87,7 +87,9 @@ julia> a = SU2(2+3f0im,1+4f0im)
 ```
 """
 function renormalize!(a::SU2{T}) where T
-    normalize!(a)
+    norms = norm(a)
+    a[1] = a[1]/norms
+    a[2] = a[2]/norms
     return
 end
 adjoint(a::SU2{T}) where T = SU2(conj(a[1]),-a[2])
