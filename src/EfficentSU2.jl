@@ -4,7 +4,7 @@ module EfficentSU2
     using LinearAlgebra
     import LinearAlgebra: tr, mul!,  adjoint!
 
-    mutable struct SU2{T} <: FieldVector{2,T}
+     struct SU2{T} <: FieldVector{2,T}
         z₁::T
         z₂::T
     end
@@ -43,27 +43,27 @@ similar(a::SU2{T}) where T = SU2(MArray{Tuple{2}}( Array{eltype(a)}(undef,2)))
     mul!(res::SU2{T},a::SU2{T},b::SU2{T})
     Calculate a*b and store it in res
 """
-function mul!(res::SU2{T},a::SU2{T},b::SU2{T}) where T
-    res[1] = a[1]*b[1]-a[2]*conj(b[2])
-    res[2] = a[1]*b[2]+a[2]*conj(b[1])
-    return
-end
-function mul!(res::SU2{T},res2::SU2{T},a::SU2{T},b::SU2{T},c::SU2{T}) where T
-    @inline mul!(res2,a,b)
-    @inline mul!(res,res2,c)
-end
+# function mul!(res::SU2{T},a::SU2{T},b::SU2{T}) where T
+#     res[1] = a[1]*b[1]-a[2]*conj(b[2])
+#     res[2] = a[1]*b[2]+a[2]*conj(b[1])
+#     return
+# end
+# function mul!(res::SU2{T},res2::SU2{T},a::SU2{T},b::SU2{T},c::SU2{T}) where T
+#     @inline mul!(res2,a,b)
+#     @inline mul!(res,res2,c)
+# end
 function ones(::Type{T})  where {N<:Number, T<:SU2{N}}
     SU2(one(N),zero(N))
     
 end
-function add!(res,a,b)
-    res[1] = a[1]+b[1]
-    res[2] = a[2]+b[2]
-end
-function sub!(res,a,b)
-    res[1] = a[1]-b[1]
-    res[2] = a[2]-b[2]
-end
+# function add!(res,a,b)
+#     res[1] = a[1]+b[1]
+#     res[2] = a[2]+b[2]
+# end
+# function sub!(res,a,b)
+#     res[1] = a[1]-b[1]
+#     res[2] = a[2]-b[2]
+# end
 function ones(::Type{T}, dims::Tuple{Vararg{I, N}} where I<:Integer) where {T<:SU2,N}
     return reshape([ones(T) for i in 1:prod(dims)],dims)
 end
@@ -86,25 +86,22 @@ julia> a = SU2(2+3f0im,1+4f0im)
 
 ```
 """
-function renormalize!(a::SU2{T}) where T
-    norms = norm(a)
-    a[1] = a[1]/norms
-    a[2] = a[2]/norms
-    return
+function renormalize(a::SU2{T}) where T
+    return a ./norm(a)
 end
 adjoint(a::SU2{T}) where T = SU2(conj(a[1]),-a[2])
 #TODO not working as expected
 # adjoint!(res::SU2{T},a::SU2{S}) where {T,S} = begin 
 #     res =adjoint!(promote(res,a)...)
 # end
-function adjoint!(res::SU2{T},a::SU2{T}) where T<:Number
-        res[1] = conj(a[1])
-        res[2] = -a[2]
-        return res
-    end
+# function adjoint!(res::SU2{T},a::SU2{T}) where T<:Number
+#         res[1] = conj(a[1])
+#         res[2] = -a[2]
+#         return res
+#     end
     Base.promote_type(::Type{SU2{T}},::Type{SU2{S}}) where {T,S} = SU2{promote_type(T,S)}
     Base.convert(::Type{SU2{T}},a::SU2{N}) where{ T<:Any,N<:Number} = SU2(T(a[1]),T(a[2]))
 
-    export SU2,getMatrix,*,tr,mul!,similar,ones,renormalize!,adjoint,adjoint!, promote_rule,add!,sub!
+    export SU2,getMatrix,*,tr,similar,ones,renormalize,adjoint, promote_rule
 end
 
