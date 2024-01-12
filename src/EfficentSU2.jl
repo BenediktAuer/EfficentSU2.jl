@@ -1,5 +1,5 @@
 module EfficentSU2
-    using StaticArrays
+    using StaticArrays,MuladdMacro
     import Base: *, similar, ones, adjoint,convert
     using LinearAlgebra
     import LinearAlgebra: tr, mul!,  adjoint!
@@ -35,7 +35,7 @@ function getMatrix(a::SU2)
     
     # end
 
-*(a::SU2{T},b::SU2{T}) where T= SU2(a[1]*b[1]-a[2]*conj(b[2]), a[1]*b[2]+a[2]*conj(b[1]))
+*(a::SU2{T},b::SU2{T}) where T= @muladd SU2(a[1]*b[1]-a[2]*conj(b[2]), a[1]*b[2]+a[2]*conj(b[1]))
 tr(a::SU2{T}) where T = 2*real(a[1])
 
 similar(a::SU2{T}) where T = SU2(MArray{Tuple{2}}( Array{eltype(a)}(undef,2)))
