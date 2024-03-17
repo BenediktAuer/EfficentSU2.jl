@@ -1,4 +1,4 @@
-using EfficentSU2,LinearAlgebra,Random,BenchmarkTools   
+using EfficientSU2,LinearAlgebra,Random,BenchmarkTools   
 a = SU2(1+1f0*im,2f0*im)
 b = SU2(5+7f0*im,19f0*im)
 c = SU2(-3+9f0*im,3f0*im)
