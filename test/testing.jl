@@ -1,4 +1,4 @@
-using EfficentSU2,LinearAlgebra,Random
+using EfficientSU2,LinearAlgebra,Random
 function get_randomSU2!(R,ϵ)
     #distance = 1/2--1/2 gives interval -1/2 to 1/2
     getRandUniformly!(R,1)
