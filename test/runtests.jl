@@ -1,4 +1,4 @@
-using EfficentSU2
+using EfficientSU2
 using Test, StaticArrays,LinearAlgebra
 
 @testset "Instantiation and getFields" begin
