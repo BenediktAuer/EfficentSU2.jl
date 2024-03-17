@@ -1,4 +1,4 @@
-module EfficentSU2
+module EfficientSU2
     using StaticArrays,MuladdMacro
     import Base: *, similar, ones, adjoint,convert
     using LinearAlgebra
